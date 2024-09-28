@@ -1,4 +1,6 @@
-# task #5
+# Task #5
+
+### [Open live](https://rislammb-task-5.netlify.app/)
 
 Implement a Web-application for the fake (random) user data generation.
 
