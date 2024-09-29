@@ -40,7 +40,6 @@ export default function ErrorSlider({
         type="number"
         min={0}
         max={1000}
-        step={0.1}
         value={inputValue}
         onChange={handleInputChange}
         className="input input-bordered w-[72px]"

@@ -18,9 +18,9 @@ export const generateUserRecord = (
   return {
     index,
     id: faker.string.uuid(),
-    name: `${faker.person.firstName()} ${faker.person.lastName()}`,
-    address: `${faker.location.country()}, ${faker.location.city()}, ${faker.location.streetAddress()}`,
-    phone: faker.phone.number(),
+    name: `${faker.person.firstName()} ${faker.person.middleName()} ${faker.person.lastName()}`,
+    address: `${faker.location.country()}, ${faker.location.city()}, ${faker.location.street()}`,
+    phone: faker.phone.number({ style: "international" }),
   };
 };
 

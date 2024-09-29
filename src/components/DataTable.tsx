@@ -1,43 +1,10 @@
-import { useState, useEffect } from "react";
-import { UserRecord, Region } from "../types/types";
-import { generateRecords, injectErrors } from "../utils/dataGenerator";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
+import { UserRecord } from "../types/types";
 
 interface DataTableProps {
-  region: Region;
-  errorCount: number;
-  seed: string;
+  data: UserRecord[];
 }
 
-export default function DataTable({
-  region,
-  errorCount,
-  seed,
-}: DataTableProps) {
-  const [records, setRecords] = useState<UserRecord[]>([]);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    setRecords([]);
-    if (page === 1) {
-      const newRecords = generateRecords(page, seed, region, 20).map((record) =>
-        injectErrors(record, errorCount)
-      );
-      setRecords(newRecords);
-    } else {
-      setPage(1);
-    }
-  }, [region, errorCount, seed]);
-
-  useEffect(() => {
-    const newRecords = generateRecords(page, seed, region, 20).map((record) =>
-      injectErrors(record, errorCount)
-    );
-    setRecords((prev) => [...prev, ...newRecords]);
-  }, [page]);
-
-  useInfiniteScroll(() => setPage((prev) => prev + 1));
-
+export default function DataTable({ data }: DataTableProps) {
   return (
     <table className="w-full table table-zebra">
       <thead className="bg-indigo-100 text-gray-700">
@@ -50,8 +17,8 @@ export default function DataTable({
         </tr>
       </thead>
       <tbody>
-        {records.length > 0 &&
-          records.map((record, index) => (
+        {data.length > 0 &&
+          data.map((record, index) => (
             <tr key={index}>
               <td>{record.index}</td>
               <td>{record.id}</td>
