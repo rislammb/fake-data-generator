@@ -12,31 +12,32 @@ const App: React.FC = () => {
   const [region, setRegion] = useState<Region>("USA");
   const [errorCount, setErrorCount] = useState(0);
   const [seed, setSeed] = useState(Math.random().toString(36).substring(2, 15));
+  const [recordsData, setRecordsData] = useState<UserRecord[]>([]);
   const [records, setRecords] = useState<UserRecord[]>([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setRecords([]);
+    setRecordsData([]);
     if (page === 1) {
       const newRecords = generateRecords(page, seed, region, 20).map((record) =>
         injectErrors(record, errorCount)
       );
-      setRecords(newRecords);
+      setRecordsData(newRecords);
     } else {
       setPage(1);
     }
-  }, [region]);
+  }, [region, seed]);
 
   useEffect(() => {
-    const newRecords = records.map((record) =>
+    const newRecords = recordsData.map((record) =>
       injectErrors(record, errorCount)
     );
     setRecords(newRecords);
-  }, [errorCount, seed]);
+  }, [errorCount, recordsData]);
 
   useEffect(() => {
     const newRecords = generateRecords(page, seed, region, 20);
-    setRecords((prev) => [...prev, ...newRecords]);
+    setRecordsData((prev) => [...prev, ...newRecords]);
   }, [page]);
 
   useInfiniteScroll(() => setPage((prev) => prev + 1));
@@ -51,7 +52,7 @@ const App: React.FC = () => {
           <ExportAsCSV data={records} />
         </div>
       </div>
-      <div className="max-w-screen-lg mx-auto overflow-x-auto px-2">
+      <div className="max-w-screen-2xl mx-auto w-full px-2">
         <DataTable data={records} />
       </div>
     </div>

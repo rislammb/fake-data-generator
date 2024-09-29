@@ -6,7 +6,7 @@ interface DataTableProps {
 
 export default function DataTable({ data }: DataTableProps) {
   return (
-    <table className="w-full table table-zebra">
+    <table className="max-w-full table table-zebra">
       <thead className="bg-indigo-100 text-gray-700">
         <tr>
           <th>#</th>
@@ -22,7 +22,7 @@ export default function DataTable({ data }: DataTableProps) {
             <tr key={index}>
               <td>{record.index}</td>
               <td>{record.id}</td>
-              <td>{record.name}</td>
+              <td style={{ overflowWrap: "anywhere" }}>{record.name}</td>
               <td>{record.address}</td>
               <td>{record.phone}</td>
             </tr>
