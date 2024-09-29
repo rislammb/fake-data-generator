@@ -24,18 +24,15 @@ export const generateUserRecord = (
   };
 };
 
-// Function to generate multiple records
 export const generateRecords = (
   page: number,
   seed: string,
   region: Region,
   count: number
 ): UserRecord[] => {
-  console.log(page, seed, region, count);
-
   const faker = getLocaleFaker(region);
 
-  faker.seed(parseInt(seed + page, 36)); // Use seed and page number for consistent pagination
+  faker.seed(parseInt(seed + page, 36));
   const records = [];
   for (let i = 1; i <= count; i++) {
     records.push(generateUserRecord(i + (page - 1) * count, region));
@@ -43,30 +40,24 @@ export const generateRecords = (
   return records;
 };
 
-// Function to introduce errors into user records
 export const injectErrors = (
   record: UserRecord,
   errorCount: number
 ): UserRecord => {
-  // Basic error handling logic
   const newRecord = { ...record };
   for (let i = 0; i < errorCount; i++) {
     const errorType = Math.random();
     if (errorType < 0.33) {
-      // Delete random character
       newRecord.name = deleteRandomCharacter(newRecord.name);
     } else if (errorType < 0.66) {
-      // Add random character
       newRecord.name = addRandomCharacter(newRecord.name);
     } else {
-      // Swap characters
       newRecord.name = swapAdjacentCharacters(newRecord.name);
     }
   }
   return newRecord;
 };
 
-// Helper functions for each error type
 const deleteRandomCharacter = (str: string): string => {
   const index = Math.floor(Math.random() * str.length);
   return str.slice(0, index) + str.slice(index + 1);
